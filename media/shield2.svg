@@ -1,0 +1,7 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="28" height="32" viewBox="0 0 28 32" fill="none">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M26.14 5C26.06 5 18.54 5.47002 14.6 1.27002C14.43 1.09002 14.2 1 13.97 1C13.74 1 13.52 1.08002 13.34 1.27002C9.4 5.47002 1.92999 5 1.85999 5C1.37999 5 1 5.40997 1 5.90997V15.73C1 19.61 3.15001 23.61 6.64001 26.19L13.43 30.85C13.58 30.95 13.74 31 13.9 31C13.92 31 13.93 30.99 13.95 30.99C13.97 30.99 13.98 31 14 31C14.16 31 14.33 30.95 14.47 30.85L21.33 26.17C24.82 23.59 26.99 19.59 26.99 15.73V5.90997C27 5.40997 26.61 5 26.14 5Z" stroke="#19b2b1" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M14 16C12.34 16 11 14.66 11 13C11 11.34 12.34 10 14 10H16" stroke="#19b2b1" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M14 16C15.66 16 17 17.34 17 19C17 20.66 15.66 22 14 22H12" stroke="#19b2b1" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M14 8V10" stroke="#19b2b1" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M14 23V24" stroke="#19b2b1" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+</svg>
